@@ -29,9 +29,11 @@ class Record:
         self.phones = [p for p in self.phones if p.value != phone]
 
     def edit_phone(self, old_phone, new_phone):
+        # Validate the new phone number before updating
+        new_phone_obj = Phone(new_phone)
         for p in self.phones:
             if p.value == old_phone:
-                p.value = new_phone
+                p.value = new_phone_obj.value
 
     def find_phone(self, phone):
         for p in self.phones:
@@ -58,7 +60,6 @@ class AddressBook:
 
 book = AddressBook()
 
-
 john_record = Record("John")
 john_record.add_phone("1234567890")
 john_record.add_phone("5555555555")
@@ -75,7 +76,7 @@ for name, record in book.data.items():
 john = book.find("John")
 john.edit_phone("1234567890", "1112223333")
 
-print(john) 
+print(john)
 
 found_phone = john.find_phone("5555555555")
 print(f"{john.name}: {found_phone}")
